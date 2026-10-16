@@ -1,90 +1,270 @@
 
-~/MRKT-Nova $ cat ~/MRKT-Nova/web/index.html
 <!DOCTYPE html>
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MRKT X</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#090d17">
+<title>MRKT X — Digital Assets</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
+:root{
+ --bg:#090d17;--panel:#101827;--card:#121d30;--line:#223149;
+ --blue:#438bff;--light:#80b4ff;--muted:#8795aa;--white:#f3f7ff;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#0b0b0f;color:#f5f5f7;font-family:Arial,sans-serif}
-header{padding:24px 18px 16px;background:#121219;border-bottom:1px solid #292933}
-.logo{font-size:25px;font-weight:900;letter-spacing:1px}
-.logo span{color:#a78bfa}
-.subtitle{color:#9898a8;font-size:13px;margin-top:7px}
-main{padding:18px}
-h2{font-size:19px;margin:8px 0 14px}
-.hero{padding:22px;border-radius:20px;background:linear-gradient(135deg,#28203e,#151520);border:1px solid #40325d;margin-bottom:25px}
-.hero h1{font-size:25px;margin:0 0 10px}
-.hero p{color:#c4bfd2;font-size:14px;line-height:1.5}
-.pill{display:inline-block;background:#a78bfa;color:#171020;padding:9px 13px;border-radius:10px;font-weight:bold;font-size:12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.item{background:#15151d;border:1px solid #292933;border-radius:16px;padding:16px 12px;min-height:130px}
-.emoji{font-size:30px;margin-bottom:12px}
-.item b{font-size:14px}
-.item p{font-size:12px;color:#9999a8;margin-bottom:0}
-nav{position:sticky;bottom:0;background:#111117;border-top:1px solid #292933;display:flex;justify-content:space-around;padding:13px 2px calc(13px + env(safe-area-inset-bottom))}
-nav button{background:none;border:0;color:#a5a5b5;font-size:11px;padding:4px}
-nav button.active{color:#c4b5fd}
-section{margin-bottom:26px}
-footer{text-align:center;color:#656575;font-size:11px;padding:20px}
+body{margin:0;background:var(--bg);color:var(--white);font:14px Inter,system-ui,Arial,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+button:active{transform:scale(.98)}
+header{padding:18px 17px 14px;background:#0b1120;border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{font-size:23px;font-weight:900;letter-spacing:-1px}
+.brand span{color:var(--blue)}
+.caption{font-size:11px;color:var(--muted);margin-top:4px}
+.balance{border:1px solid #294b79;background:#122442;color:#c6e0ff;border-radius:12px;padding:10px;font-size:12px;font-weight:700}
+main{max-width:850px;margin:auto;padding:17px 15px 100px}
+.view{display:none}.view.active{display:block}
+.hero{position:relative;overflow:hidden;padding:22px 19px;border:1px solid #244b80;border-radius:20px;background:linear-gradient(130deg,#153c76,#10264b 60%,#111c32);margin-bottom:25px}
+.hero:after{content:"✦";position:absolute;right:17px;top:4px;font-size:90px;color:#ffffff0c}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#a9ceff}
+.hero h1{font-size:27px;line-height:1.15;margin:12px 0 8px;max-width:260px}
+.hero p{font-size:12px;line-height:1.6;color:#c1d5f3;max-width:270px;margin:0 0 17px}
+.primary{background:var(--blue);color:white;border:0;border-radius:11px;padding:12px 16px;font-weight:800}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:24px 0 13px}
+h2{font-size:18px;margin:0;font-weight:800}
+.muted{color:var(--muted);font-size:12px}
+.link{color:var(--light);border:0;background:none;font-size:12px}
+.search{display:flex;gap:9px;margin:16px 0}
+.search input{width:100%;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px;color:white;outline:none}
+.search input:focus{border-color:var(--blue)}
+.chips{display:flex;gap:8px;overflow:auto;padding-bottom:5px;scrollbar-width:none}
+.chip{flex-shrink:0;padding:9px 13px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:#aab8cc;font-size:12px}
+.chip.active{background:#173766;border-color:#397bd0;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.product{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden}
+.art{height:120px;display:flex;align-items:center;justify-content:center;position:relative;background:radial-gradient(ellipse at center,#1c3e70,#111b2d 72%);font-size:49px}
+.art small{position:absolute;top:9px;left:9px;background:#0b1424d9;border:1px solid #ffffff16;padding:5px 7px;border-radius:7px;font-size:9px;color:#c3d9f7}
+.fav{position:absolute;right:8px;top:8px;border:0;background:#0b1424d9;color:white;border-radius:9px;width:30px;height:30px}
+.fav.on{color:#70aaff}
+.product-info{padding:11px}
+.product-title{font-weight:750;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.product-sub{font-size:11px;color:var(--muted);margin-top:5px}
+.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:5px;margin-top:13px}
+.price{font-size:13px;font-weight:850}
+.open-item{border:0;background:#1d3f70;color:#cfe2ff;padding:8px 10px;border-radius:8px;font-size:11px;font-weight:750}
+.category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.category{display:flex;align-items:center;gap:12px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px;color:white}
+.category-icon{width:42px;height:42px;display:grid;place-items:center;background:#18345c;border-radius:12px;font-size:23px;flex-shrink:0}
+.category b{font-size:13px}.category small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px;margin:12px 0}
+.row{display:flex;align-items:center;gap:12px}
+.avatar{width:48px;height:48px;display:grid;place-items:center;background:#183967;border-radius:15px;font-size:24px}
+.rowtext{flex:1;min-width:0}.rowtext b{font-size:14px}.rowtext p{font-size:11px;color:var(--muted);margin:5px 0 0;overflow-wrap:anywhere}
+.menurow{width:100%;display:flex;align-items:center;gap:12px;padding:15px 0;background:none;border:0;border-bottom:1px solid var(--line);color:white;text-align:left}
+.menurow:last-child{border-bottom:0}.menurow span:nth-child(2){flex:1}
+.empty{text-align:center;padding:42px 15px;color:var(--muted)}
+.empty .big{font-size:42px;margin-bottom:12px}
+.empty b{display:block;color:white;font-size:16px;margin-bottom:7px}
+.detail-art{font-size:82px;text-align:center;padding:36px;background:radial-gradient(ellipse,#1e4478,#101827);border-radius:16px;margin:15px 0}
+.detail-price{font-size:25px;font-weight:900;margin:15px 0}
+.full{width:100%;margin-top:10px}
+.back{border:0;background:none;color:var(--light);padding:8px 0}
+footer{text-align:center;color:#56647a;font-size:10px;padding:20px 0}
+nav{position:fixed;z-index:5;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#0c1321f5;border-top:1px solid var(--line);padding:9px 3px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}
+nav button{flex:1;max-width:100px;background:none;border:0;color:#74839b;font-size:10px;padding:4px 0}
+nav button .ico{display:block;font-size:20px;margin-bottom:4px}
+nav button.active{color:#70aaff}
+.notice{font-size:11px;color:var(--muted);line-height:1.6;margin-top:14px}
+@media(min-width:600px){main{padding:25px 25px 110px}.art{height:165px}.grid{gap:15px}.product-info{padding:14px}.hero{padding:30px}.hero h1{font-size:32px}}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">MRKT <span>X ☑️</span></div>
-  <div class="subtitle">Telegram Gifts Marketplace</div>
+ <div class="top">
+  <div>
+   <div class="brand">MRKT <span>X</span> <span style="font-size:13px">●</span></div>
+   <div class="caption">DIGITAL ASSETS MARKETPLACE</div>
+  </div>
+  <button class="balance" onclick="showToast('Баланс буде доступний після підключення бекенду')">◈ Баланс</button>
+ </div>
 </header>
+
 <main>
-  <section class="hero">
-    <h1>Твій світ подарунків 🎁</h1>
-    <p>Відкривай колекції Telegram Gifts, переглядай маркетплейс і стеж за своїми ордерами.</p>
-    <span class="pill">MRKT X MARKETPLACE</span>
-  </section>
-  <section id="catalog">
-    <h2>🎁 Каталог</h2>
-    <div class="grid">
-      <div class="item"><div class="emoji">🎁</div><b>Telegram Gifts</b><p>Цифрові подарунки</p></div>
-      <div class="item"><div class="emoji">💎</div><b>Колекційні</b><p>Колекції та рідкість</p></div>
-      <div class="item"><div class="emoji">⭐</div><b>Stars</b><p>Telegram Stars</p></div>
-      <div class="item"><div class="emoji">📦</div><b>Мої ордери</b><p>Історія замовлень</p></div>
-    </div>
-  </section>
-  <section id="collections">
-    <h2>💎 Популярні розділи</h2>
-    <div class="item"><b>Колекції Telegram</b><p>Переглядай цифрові подарунки в одному місці.</p></div>
-  </section>
-  <section id="profile">
-    <h2>👤 Особистий кабінет</h2>
-    <div class="item"><b id="username">Гість MRKT X</b><p id="usernote">Увійди через Telegram, відкривши Mini App у боті.</p></div>
-  </section>
+ <div id="home" class="view active">
+  <div class="hero">
+   <div class="eyebrow">MRKT X MARKETPLACE</div>
+   <h1>Digital assets.<br>One place.</h1>
+   <p>Подарунки, колекції та цифрові активи Telegram — в одному місці.</p>
+   <button class="primary" onclick="navigate('catalog')">Відкрити каталог ↗</button>
+  </div>
+  <div class="search"><input id="homeSearch" placeholder="⌕  Пошук подарунків та активів" oninput="syncSearch(this.value)"></div>
+  <div class="section-head"><h2>Категорії</h2><button class="link" onclick="navigate('catalog')">Усі →</button></div>
+  <div class="category-grid">
+   <button class="category" onclick="setCategory('Gifts')"><span class="category-icon">🎁</span><span><b>Gifts</b><small>Telegram Gifts</small></span></button>
+   <button class="category" onclick="setCategory('Collectibles')"><span class="category-icon">💎</span><span><b>Collectibles</b><small>Колекційні активи</small></span></button>
+   <button class="category" onclick="setCategory('Stars')"><span class="category-icon">⭐</span><span><b>Stars</b><small>Telegram Stars</small></span></button>
+   <button class="category" onclick="setCategory('Premium')"><span class="category-icon">⚡</span><span><b>Premium</b><small>Підписки</small></span></button>
+   <button class="category" onclick="setCategory('Channels')"><span class="category-icon">◉</span><span><b>Channels</b><small>Telegram-канали</small></span></button>
+   <button class="category" onclick="navigate('collections')"><span class="category-icon">▦</span><span><b>Collections</b><small>Добірки активів</small></span></button>
+  </div>
+  <div class="section-head"><h2>Популярні товари</h2><button class="link" onclick="navigate('catalog')">Усі →</button></div>
+  <div id="homeProducts" class="grid"></div>
+ </div>
+
+ <div id="catalog" class="view">
+  <div class="section-head"><h2>Каталог</h2><span class="muted" id="count"></span></div>
+  <div class="search"><input id="search" placeholder="⌕  Назва товару або колекції" oninput="renderProducts()"></div>
+  <div class="chips" id="chips"></div>
+  <div class="section-head"><span class="muted">Цифрові активи</span>
+   <select id="sort" onchange="renderProducts()" style="background:#101827;color:white;border:1px solid #223149;border-radius:8px;padding:8px;font-size:11px">
+    <option value="default">Рекомендовані</option><option value="low">Спочатку дешевші</option><option value="high">Спочатку дорожчі</option>
+   </select>
+  </div>
+  <div id="products" class="grid"></div>
+ </div>
+
+ <div id="collections" class="view">
+  <div class="section-head"><h2>Колекції</h2></div>
+  <div class="panel"><div class="row"><div class="category-icon">💎</div><div class="rowtext"><b>Collectibles</b><p>Колекційні цифрові активи</p></div></div></div>
+  <div class="panel"><div class="row"><div class="category-icon">🎁</div><div class="rowtext"><b>Telegram Gifts</b><p>Подарунки та колекційні серії</p></div></div></div>
+  <div class="panel"><div class="row"><div class="category-icon">⭐</div><div class="rowtext"><b>Stars & Premium</b><p>Цифрові послуги Telegram</p></div></div></div>
+  <p class="notice">Це демонстраційні розділи. Реальні колекції та наявність товарів з'являться після підключення джерела даних.</p>
+ </div>
+
+ <div id="favorites" class="view">
+  <div class="section-head"><h2>Обране</h2></div>
+  <div id="favoritesList"></div>
+ </div>
+
+ <div id="orders" class="view">
+  <div class="section-head"><h2>Мої ордери</h2></div>
+  <div id="ordersList"></div>
+  <p class="notice">Історія реальних замовлень потребує підключення серверної бази даних.</p>
+ </div>
+
+ <div id="profile" class="view">
+  <div class="section-head"><h2>Профіль</h2></div>
+  <div class="panel"><div class="row"><div class="avatar">👤</div><div class="rowtext"><b id="username">Гість MRKT X</b><p id="usernote">Відкрий Mini App через Telegram-бота</p></div></div></div>
+  <div class="panel">
+   <button class="menurow" onclick="navigate('orders')"><span>📦</span><span>Мої ордери</span><span>›</span></button>
+   <button class="menurow" onclick="navigate('favorites')"><span>♡</span><span>Обране</span><span>›</span></button>
+   <button class="menurow" onclick="showToast('Підключимо після налаштування бекенду')"><span>◈</span><span>Баланс і платежі</span><span>›</span></button>
+   <button class="menurow" onclick="showToast('Налаштування будуть додані окремо')"><span>⚙</span><span>Налаштування</span><span>›</span></button>
+  </div>
+  <p class="notice">MRKT X — незалежний проєкт. Демоверсія не обробляє платежі та не створює реальних замовлень.</p>
+ </div>
+
+ <div id="detail" class="view">
+  <button class="back" onclick="navigate(previousView)">← Назад</button>
+  <div id="detailContent"></div>
+ </div>
+ <footer>MRKT X · DIGITAL ASSETS</footer>
 </main>
+
 <nav>
-  <button class="active" onclick="go('catalog',this)">🎁<br>Каталог</button>
-  <button onclick="go('collections',this)">💎<br>Колекції</button>
-  <button onclick="go('profile',this)">👤<br>Профіль</button>
+ <button data-view="home" class="active" onclick="navigate('home')"><span class="ico">⌂</span>Головна</button>
+ <button data-view="catalog" onclick="navigate('catalog')"><span class="ico">▦</span>Каталог</button>
+ <button data-view="favorites" onclick="navigate('favorites')"><span class="ico">♡</span>Обране</button>
+ <button data-view="orders" onclick="navigate('orders')"><span class="ico">▤</span>Ордери</button>
+ <button data-view="profile" onclick="navigate('profile')"><span class="ico">◉</span>Профіль</button>
 </nav>
-<footer>MRKT X · Digital Gifts Marketplace</footer>
+
 <script>
 const tg=window.Telegram?.WebApp;
-if(tg){
-  tg.ready();
-  tg.expand();
-  const u=tg.initDataUnsafe?.user;
-  if(u){
-    document.getElementById('username').textContent=
-      [u.first_name,u.last_name].filter(Boolean).join(' ')||'Користувач';
-    document.getElementById('usernote').textContent='Telegram ID: '+u.id;
-  }
+if(tg){tg.ready();tg.expand();try{tg.setHeaderColor('#0b1120');tg.setBackgroundColor('#090d17')}catch(e){}}
+const products=[
+ {id:1,name:'Blue Star Gift',cat:'Gifts',emoji:'🎁',price:250,sub:'Telegram Gift'},
+ {id:2,name:'Crystal Collectible',cat:'Collectibles',emoji:'💎',price:490,sub:'Collectible'},
+ {id:3,name:'Telegram Stars',cat:'Stars',emoji:'⭐',price:100,sub:'Digital service'},
+ {id:4,name:'Premium Access',cat:'Premium',emoji:'⚡',price:350,sub:'Subscription'},
+ {id:5,name:'Gift Box',cat:'Gifts',emoji:'🎀',price:180,sub:'Telegram Gift'},
+ {id:6,name:'Blue Diamond',cat:'Collectibles',emoji:'🔷',price:790,sub:'Collectible'},
+ {id:7,name:'Channel Listing',cat:'Channels',emoji:'◉',price:500,sub:'Channel service'},
+ {id:8,name:'Star Bundle',cat:'Stars',emoji:'🌟',price:220,sub:'Digital service'}
+];
+let category='All',previousView='catalog';
+let favorites=JSON.parse(localStorage.getItem('mrktx-favorites')||'[]');
+let demoOrders=[];
+const views=['home','catalog','collections','favorites','orders','profile','detail'];
+function navigate(id){
+ if(!views.includes(id))return;
+ document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
+ if(id==='favorites')renderFavorites();
+ if(id==='orders')renderOrders();
+ window.scrollTo({top:0,behavior:'smooth'});
 }
-function go(id,btn){
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+function setCategory(cat){
+ category=cat;
+ navigate('catalog');
+ document.getElementById('search').value='';
+ renderChips();renderProducts();
 }
+function syncSearch(value){
+ document.getElementById('search').value=value;
+ category='All';renderChips();renderProducts();navigate('catalog');
+}
+function renderChips(){
+ const cats=['All','Gifts','Collectibles','Stars','Premium','Channels'];
+ document.getElementById('chips').innerHTML=cats.map(c=>
+ `<button class="chip ${c===category?'active':''}" onclick="category='${c}';renderChips();renderProducts()">${c==='All'?'Усі':c}</button>`).join('');
+}
+function productCard(p){
+ const fav=favorites.includes(p.id);
+ return `<article class="product">
+ <div class="art" onclick="openProduct(${p.id})"><small>${p.cat}</small>${p.emoji}
+ <button class="fav ${fav?'on':''}" aria-label="Обране" onclick="event.stopPropagation();toggleFav(${p.id})">${fav?'♥':'♡'}</button></div>
+ <div class="product-info"><div class="product-title">${p.name}</div><div class="product-sub">${p.sub}</div>
+ <div class="product-bottom"><span class="price">${p.price} ₴</span><button class="open-item" onclick="openProduct(${p.id})">Деталі ↗</button></div></div></article>`;
+}
+function renderProducts(){
+ const q=(document.getElementById('search')?.value||'').toLowerCase();
+ let list=products.filter(p=>(category==='All'||p.cat===category)&&(`${p.name} ${p.cat} ${p.sub}`.toLowerCase().includes(q)));
+ const sort=document.getElementById('sort')?.value;
+ if(sort==='low')list.sort((a,b)=>a.price-b.price);
+ if(sort==='high')list.sort((a,b)=>b.price-a.price);
+ document.getElementById('count').textContent=list.length+' позицій';
+ document.getElementById('products').innerHTML=list.length?list.map(productCard).join(''):'<div class="empty" style="grid-column:1/-1">Нічого не знайдено</div>';
+}
+function toggleFav(id){
+ favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];
+ localStorage.setItem('mrktx-favorites',JSON.stringify(favorites));
+ renderProducts();renderHome();renderFavorites();
+}
+function renderFavorites(){
+ const list=products.filter(p=>favorites.includes(p.id));
+ document.getElementById('favoritesList').innerHTML=list.length?`<div class="grid">${list.map(productCard).join('')}</div>`:'<div class="empty"><div class="big">♡</div><b>Тут поки порожньо</b>Додавай товари в обране кнопкою ♡</div>';
+}
+function renderHome(){document.getElementById('homeProducts').innerHTML=products.slice(0,4).map(productCard).join('')}
+function openProduct(id){
+ const p=products.find(x=>x.id===id);if(!p)return;
+ previousView=document.querySelector('.view.active')?.id||'catalog';
+ document.getElementById('detailContent').innerHTML=`
+ <div class="detail-art">${p.emoji}</div><div class="eyebrow">${p.cat.toUpperCase()}</div>
+ <h2 style="margin-top:10px">${p.name}</h2><p class="muted">${p.sub}</p>
+ <div class="detail-price">${p.price} ₴</div>
+ <p class="notice">Демонстраційна картка. Ціна та наявність не є реальною пропозицією продавця.</p>
+ <button class="primary full" onclick="showToast('Реальні покупки ще не підключені')">Придбати</button>
+ <button class="open-item full" onclick="toggleFav(${p.id})">♡ Додати / прибрати з обраного</button>`;
+ navigate('detail');
+}
+function renderOrders(){
+ const el=document.getElementById('ordersList');
+ el.innerHTML=demoOrders.length?demoOrders.map(o=>`<div class="panel"><b>${o.name}</b><p class="muted">${o.price} ₴ · Демозамовлення</p></div>`).join(''):'<div class="empty"><div class="big">▤</div><b>Замовлень поки немає</b>Тут відображатимуться твої ордери після підключення бекенду.</div>';
+}
+let toastTimer;
+function showToast(message){
+ let t=document.getElementById('toast');
+ if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;z-index:20;bottom:85px;left:50%;transform:translateX(-50%);width:max-content;max-width:90%;background:#203653;border:1px solid #3974b8;color:white;padding:12px 16px;border-radius:12px;font-size:12px;text-align:center';document.body.appendChild(t)}
+ t.textContent=message;t.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.display='none',2600);
+}
+const u=tg?.initDataUnsafe?.user;
+if(u){
+ document.getElementById('username').textContent=[u.first_name,u.last_name].filter(Boolean).join(' ')||'Користувач';
+ document.getElementById('usernote').textContent=u.username?'@'+u.username:'Telegram ID: '+u.id;
+}
+renderChips();renderProducts();renderHome();
 </script>
 </body>
 </html>
-~/MRKT-Nova $
