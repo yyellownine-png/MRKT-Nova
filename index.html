@@ -1,1 +1,90 @@
 
+~/MRKT-Nova $ cat ~/MRKT-Nova/web/index.html
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MRKT X</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b0f;color:#f5f5f7;font-family:Arial,sans-serif}
+header{padding:24px 18px 16px;background:#121219;border-bottom:1px solid #292933}
+.logo{font-size:25px;font-weight:900;letter-spacing:1px}
+.logo span{color:#a78bfa}
+.subtitle{color:#9898a8;font-size:13px;margin-top:7px}
+main{padding:18px}
+h2{font-size:19px;margin:8px 0 14px}
+.hero{padding:22px;border-radius:20px;background:linear-gradient(135deg,#28203e,#151520);border:1px solid #40325d;margin-bottom:25px}
+.hero h1{font-size:25px;margin:0 0 10px}
+.hero p{color:#c4bfd2;font-size:14px;line-height:1.5}
+.pill{display:inline-block;background:#a78bfa;color:#171020;padding:9px 13px;border-radius:10px;font-weight:bold;font-size:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.item{background:#15151d;border:1px solid #292933;border-radius:16px;padding:16px 12px;min-height:130px}
+.emoji{font-size:30px;margin-bottom:12px}
+.item b{font-size:14px}
+.item p{font-size:12px;color:#9999a8;margin-bottom:0}
+nav{position:sticky;bottom:0;background:#111117;border-top:1px solid #292933;display:flex;justify-content:space-around;padding:13px 2px calc(13px + env(safe-area-inset-bottom))}
+nav button{background:none;border:0;color:#a5a5b5;font-size:11px;padding:4px}
+nav button.active{color:#c4b5fd}
+section{margin-bottom:26px}
+footer{text-align:center;color:#656575;font-size:11px;padding:20px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MRKT <span>X ☑️</span></div>
+  <div class="subtitle">Telegram Gifts Marketplace</div>
+</header>
+<main>
+  <section class="hero">
+    <h1>Твій світ подарунків 🎁</h1>
+    <p>Відкривай колекції Telegram Gifts, переглядай маркетплейс і стеж за своїми ордерами.</p>
+    <span class="pill">MRKT X MARKETPLACE</span>
+  </section>
+  <section id="catalog">
+    <h2>🎁 Каталог</h2>
+    <div class="grid">
+      <div class="item"><div class="emoji">🎁</div><b>Telegram Gifts</b><p>Цифрові подарунки</p></div>
+      <div class="item"><div class="emoji">💎</div><b>Колекційні</b><p>Колекції та рідкість</p></div>
+      <div class="item"><div class="emoji">⭐</div><b>Stars</b><p>Telegram Stars</p></div>
+      <div class="item"><div class="emoji">📦</div><b>Мої ордери</b><p>Історія замовлень</p></div>
+    </div>
+  </section>
+  <section id="collections">
+    <h2>💎 Популярні розділи</h2>
+    <div class="item"><b>Колекції Telegram</b><p>Переглядай цифрові подарунки в одному місці.</p></div>
+  </section>
+  <section id="profile">
+    <h2>👤 Особистий кабінет</h2>
+    <div class="item"><b id="username">Гість MRKT X</b><p id="usernote">Увійди через Telegram, відкривши Mini App у боті.</p></div>
+  </section>
+</main>
+<nav>
+  <button class="active" onclick="go('catalog',this)">🎁<br>Каталог</button>
+  <button onclick="go('collections',this)">💎<br>Колекції</button>
+  <button onclick="go('profile',this)">👤<br>Профіль</button>
+</nav>
+<footer>MRKT X · Digital Gifts Marketplace</footer>
+<script>
+const tg=window.Telegram?.WebApp;
+if(tg){
+  tg.ready();
+  tg.expand();
+  const u=tg.initDataUnsafe?.user;
+  if(u){
+    document.getElementById('username').textContent=
+      [u.first_name,u.last_name].filter(Boolean).join(' ')||'Користувач';
+    document.getElementById('usernote').textContent='Telegram ID: '+u.id;
+  }
+}
+function go(id,btn){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
+~/MRKT-Nova $
